@@ -4,6 +4,8 @@ class MoviesController < ApplicationController
   def index
     movies = Movie.all
     render json: movies
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
   end
 
   def create
